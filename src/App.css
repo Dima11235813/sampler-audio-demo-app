@@ -20,3 +20,10 @@
 .App-link {
   color: #09d3ac;
 }
+tone-oscilloscope {
+  width: 100%;
+  background-color: black;
+  height: 40px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+}
