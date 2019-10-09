@@ -7,6 +7,9 @@ function App() {
   return (
     <div className="App">
       <div id="sound-controls-containter">
+        {
+
+        }
         <button onClick={main.start}>Start</button>
         <button onClick={main.stop}>Stop</button>
       </div>
