@@ -5,15 +5,15 @@ import { main } from "./toneContext/toneContext";
 
 function App() {
   // let updateSampleItems = useState()
-  const handleStartRecording = () => {
-    debugger;
-    main.start()
-  };
-  debugger;
+  // const handleStartRecording = () => {
+  //   // debugger;
+  //   main.start()
+  // };
+  // debugger;
   return (
     <div className="App">
       <div id="sound-controls-containter">
-        <button onClick={handleStartRecording}>Start</button>
+        <button onClick={main.start}>Start</button>
         <button onClick={main.stop}>Stop</button>
       </div>
     </div>

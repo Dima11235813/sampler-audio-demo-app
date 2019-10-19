@@ -32,7 +32,8 @@ export const main = (function() {
     //create audio element
     const audioEl = document.createElement("audio");
     audioElements.push(audioEl);
-    audioEl.controls = false;
+    audioEl.controls = true;
+    // debugger
     //create source
     const sourceEl = document.createElement("source");
     sourceEl.src = blobUrl;
@@ -86,6 +87,7 @@ export const main = (function() {
       });
   };
   const checkIfCanInteract = () => {
+      return true
     return recorders.length > 0;
   };
   createMediaRecorder();
@@ -101,6 +103,7 @@ export const main = (function() {
       if (checkIfCanInteract()) {
         // start recording with 1 second time between receiving 'ondataavailable' events
         let currentSamplerItem = recorders.length - 1;
+        // debugger
         if (currentSamplerItem !== 0) {
           createMediaRecorder();
         } else {
