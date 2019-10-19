@@ -2,11 +2,10 @@ import React, {useState} from "react";
 import AUD_CST from "../constants/audioConsts";
 
 export const PlayBackRateHelper = ({ playBackRateOptions, cb }) => {
-    const [selectedPlaybackRateValue,setSelectedPlaybackRateValue] = useState(AUD_CST.DEFAULT_PLAYBACK_RATE) 
-
     const handleChange = (event) => {
         let floatPlaybackRate = parseFloat(event.target.value)
-        setSelectedPlaybackRateValue(floatPlaybackRate)
+        cb(floatPlaybackRate)
+
     }
   return (
     <select onChange={handleChange}>

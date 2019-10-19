@@ -5,12 +5,13 @@ import AUD_CST from "./constants/audioConsts";
 import { AudioElement } from "./component/AudioElement";
 
 function App() {
-  let newMediaRec = useRef(null)
+  let newMediaRec = useRef(null);
   const [recording, setRecording] = useState(false);
   const [blobUrls, addBlobUrl] = useState([]);
+
   const gotUserMediaCb = stream => {
     newMediaRec.current = new MediaRecorder(stream);
-    let mediaRec = newMediaRec.current
+    let mediaRec = newMediaRec.current;
     console.log(`Created new media recorder #${newMediaRec}`);
     let tempChunks = [];
     mediaRec.ondataavailable = e => {
@@ -25,27 +26,33 @@ function App() {
           type: "audio/wav"
         });
         let blobUrl = URL.createObjectURL(blob);
+        debugger
         addBlobUrl([...blobUrls, blobUrl]);
       }
     };
   };
   const createRecorder = () => {
     navigator.mediaDevices
-      .getUserMedia({ audio: true })
-      .then(stream => {
-        gotUserMediaCb(stream);
-      })
-      .catch(err => {
-        console.log("fail to get user media");
-      });
+    .getUserMedia({ audio: true })
+    .then(stream => {
+      gotUserMediaCb(stream);
+    })
+    .catch(err => {
+      console.log("fail to get user media");
+    });
   };
+  
+  //create the recorder as if on component did mount
   useEffect(() => {
-      createRecorder();
-    }, []);
-    useEffect(() => {
-      console.log("media recorder")
-      console.log(newMediaRec)
-      let mediaRec = newMediaRec.current
+    createRecorder();
+  }, []);
+  
+  //every time user clicks record button, capture another audio blob
+  useEffect(() => {
+    console.log(`Blobs ${blobUrls.length}`)
+    console.log("media recorder");
+    console.log(newMediaRec);
+    let mediaRec = newMediaRec.current;
     if (mediaRec && mediaRec.state === "inactive") {
       console.log("Calling start on media recorder");
       mediaRec.start();
@@ -54,6 +61,7 @@ function App() {
       mediaRec.stop();
     }
   }, [recording]);
+
   return (
     <div className="App">
       <div id="sound-controls-containter">
@@ -61,7 +69,8 @@ function App() {
           className={recording ? "recording" : ""}
           onMouseDown={() => setRecording(true)}
           onMouseUp={() => setRecording(false)}
-        >●
+        >
+          ●
         </button>
         <div id="sound-controls-containter">
           {blobUrls.map((blobUrl, index) => (
