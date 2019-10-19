@@ -3,10 +3,10 @@ import logo from "./logo.svg";
 import "./App.css";
 import AUD_CST from "./constants/audioConsts";
 import { AudioElement } from "./component/AudioElement";
+import { Sampler } from "./component/Sampler";
 
 function App() {
   let newMediaRec = useRef(null);
-  const [recording, setRecording] = useState(false);
   const [blobUrls, addBlobUrl] = useState([]);
 
   const gotUserMediaCb = stream => {
@@ -25,59 +25,33 @@ function App() {
         const blob = new Blob(tempChunks, {
           type: "audio/wav"
         });
-        let blobUrl = URL.createObjectURL(blob);
-        debugger
-        addBlobUrl([...blobUrls, blobUrl]);
+        updateBlobs(blob);
       }
     };
   };
+  const updateBlobs = blob => {
+    let blobUrl = URL.createObjectURL(blob);
+    addBlobUrl([...blobUrls, blobUrl]);
+  };
   const createRecorder = () => {
     navigator.mediaDevices
-    .getUserMedia({ audio: true })
-    .then(stream => {
-      gotUserMediaCb(stream);
-    })
-    .catch(err => {
-      console.log("fail to get user media");
-    });
+      .getUserMedia({ audio: true })
+      .then(stream => {
+        gotUserMediaCb(stream);
+      })
+      .catch(err => {
+        console.log("fail to get user media");
+      });
   };
-  
+
   //create the recorder as if on component did mount
   useEffect(() => {
     createRecorder();
   }, []);
-  
-  //every time user clicks record button, capture another audio blob
-  useEffect(() => {
-    console.log(`Blobs ${blobUrls.length}`)
-    console.log("media recorder");
-    console.log(newMediaRec);
-    let mediaRec = newMediaRec.current;
-    if (mediaRec && mediaRec.state === "inactive") {
-      console.log("Calling start on media recorder");
-      mediaRec.start();
-    } else if (mediaRec && mediaRec.state === "recording") {
-      console.log("Calling stop on media creator");
-      mediaRec.stop();
-    }
-  }, [recording]);
 
   return (
     <div className="App">
-      <div id="sound-controls-containter">
-        <button
-          className={recording ? "recording" : ""}
-          onMouseDown={() => setRecording(true)}
-          onMouseUp={() => setRecording(false)}
-        >
-          ●
-        </button>
-        <div id="sound-controls-containter">
-          {blobUrls.map((blobUrl, index) => (
-            <AudioElement key={index} blobUrl={blobUrl} number={index + 1} />
-          ))}
-        </div>
-      </div>
+      <Sampler blobUrls={blobUrls} newMediaRec={newMediaRec} />
     </div>
   );
 }

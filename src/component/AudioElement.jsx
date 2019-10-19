@@ -15,7 +15,6 @@ export const AudioElement = ({ blobUrl, number }) => {
     thisAudioElement.pause();
   };
   const handle_playbackRate = value => {
-    debugger;
     thisAudioElement.playbackRate = value;
     //TODO show duration
   };
@@ -39,7 +38,7 @@ export const AudioElement = ({ blobUrl, number }) => {
     backgroundColor: "grey",
     margin: "1rem"
   };
-  const playBackRateOptions = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1];
+  const playBackRateOptions = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1,1.5,2,2.5,3];
   const sampleName = "Sample ";
   return (
     <React.Fragment>
