@@ -8,3 +8,7 @@ myaudio.duration; - Returns the length of the music track.
 myaudio.currentTime = 0; - This will rewind the audio to the beginning.
 myaudio.loop = true; - This will make the audio track loop.
 myaudio.muted = true; - This will mute the track
+
+toggle switch - 
+trigger - midi clip - play on press
+momentatry switch - gate - press down - play is active - when you release it stops

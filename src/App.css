@@ -1,7 +1,9 @@
 .App {
   text-align: center;
 }
-
+.recording{
+  color: red;
+}
 .App-logo {
   height: 40vmin;
 }
